@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .repo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .repo-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .repo-item a {
+            text-decoration: none;
+            color: #0366d6;
+        }
+        .repo-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Portfolio</h1>
+        <p>Check out my GitHub repositories below!</p>
+    </header>
+    <div class="container">
+        <h2>My Repositories</h2>
+        <ul id="repos" class="repo-list"></ul>
+    </div>
+
+    <script>
+        // Fetch GitHub repositories using the GitHub API
+        fetch('https://api.github.com/users/[your-username]/repos')
+            .then(response => response.json())
+            .then(data => {
+                const reposContainer = document.getElementById('repos');
+                data.forEach(repo => {
+                    const repoItem = document.createElement('li');
+                    repoItem.className = 'repo-item';
+                    repoItem.innerHTML = `
+                        <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                        <p>${repo.description || 'No description available.'}</p>
+                    `;
+                    reposContainer.appendChild(repoItem);
+                });
+            })
+            .catch(error => console.error('Error fetching repositories:', error));
+    </script>
+</body>
+</html>
